@@ -12,5 +12,5 @@ interface BookApi {
     suspend fun getAllBooks(): Response<Books>
 
     @GET("?q={title}")
-    suspend fun getBookInfo(@Path("title") title: String): Response<List<BookInfo>>
+    suspend fun getBookInfo(@Path("title") title: String): Response<Books>
 }

@@ -1,4 +1,4 @@
-package com.example.wanted.view
+package com.example.wanted.view.main
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -6,17 +6,19 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import com.example.wanted.R
+import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.databinding.ActivityMainBinding
+import com.example.wanted.view.main.adapter.MainAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+
+    private val bookList = arrayListOf<BookInfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         initListener()
 
 
-
     }
 
     @SuppressLint("LogNotTimber")
@@ -39,15 +40,39 @@ class MainActivity : AppCompatActivity() {
         viewModel.allBooks.observe(this) {
             binding.apply {
 
+                bookList.addAll(it.items!!)
+                Log.d("test:", it.items.toString())
+
+                setBookRecyclerView()
+                searchedItemNum.text = "검색된 도서 수 : ${it.totalItems}"
             }
         }
+
+        viewModel.searchBookList.observe(this) {
+            it.items?.forEach {
+                bookList.add(it)
+            }
+        }
+
     }
 
     private fun initListener() {
         binding.apply {
-
+            searchBtn.setOnClickListener {
+                viewModel.getSearchedBookList(searchEt.text.toString())
+                setBookRecyclerView()
+            }
         }
     }
 
+    private fun setBookRecyclerView() {
+        binding.apply {
+            bookRecyclerview.apply {
+                adapter = MainAdapter(viewModel)
+                (adapter as MainAdapter).submitList(bookList)
+                scheduleLayoutAnimation()
+            }
+        }
+    }
 
 }

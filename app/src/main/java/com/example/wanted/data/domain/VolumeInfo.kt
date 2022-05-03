@@ -12,4 +12,5 @@ data class VolumeInfo(
     var description: String? = null,
     var printType: String? = null,
     var pageCount: Int? = null,
+    var imageLinks: ImageLinks? = null,
 ): Parcelable

@@ -10,5 +10,4 @@ data class BookInfo(
     var etag: String? = null,
     var selfLink: String? = null,
     var volumeInfo: VolumeInfo? = null,
-    var imageLinks: ImageLinks? = null,
 ): Parcelable
