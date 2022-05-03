@@ -19,7 +19,7 @@ class BookRepository @Inject constructor(
         }
     }
 
-    suspend fun getBookInfo(title: String): ResponseBody<BookInfo>? {
+    suspend fun getBookInfo(title: String): ResponseBody<List<BookInfo>>? {
         return try {
             ApiResponse.create(bookApi.getBookInfo(title))
         } catch (e: Exception) {

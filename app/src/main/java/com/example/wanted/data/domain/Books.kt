@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class Books(
     var kind: String? = null,
     var totalItems: Int? = null,
-    var items: BookInfo? = null
+    var items: List<BookInfo>? = null
 ): Parcelable

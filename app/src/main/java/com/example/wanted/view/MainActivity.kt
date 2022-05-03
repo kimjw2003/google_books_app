@@ -1,7 +1,10 @@
 package com.example.wanted.view
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.wanted.R
@@ -12,13 +15,13 @@ import timber.log.Timber
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        binding.setVariable(0, viewModel)
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
@@ -31,17 +34,19 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("LogNotTimber")
     private fun initLiveData() {
         viewModel.allBooks.observe(this) {
             binding.apply {
 
             }
         }
-
     }
 
     private fun initListener() {
+        binding.apply {
 
+        }
     }
 
 

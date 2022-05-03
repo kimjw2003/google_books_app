@@ -1,5 +1,6 @@
 package com.example.wanted.view
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,6 +24,8 @@ class MainViewModel @Inject constructor(
     fun getAllBooks() {
         viewModelScope.launch {
             val booksResponse = bookRepository.getBooks()
+
+            Log.d("test:", booksResponse.toString())
 
             booksResponse?.body?.let {
                 _allBooks.postValue(it)
