@@ -10,12 +10,9 @@ import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.databinding.ItemBooksBinding
 import com.example.wanted.view.main.MainViewModel
 
-class MainAdapter() : ListAdapter<BookInfo, MainViewHolder>(
-    DiffCallback()
-) {
+class MainAdapter: ListAdapter<BookInfo, MainViewHolder>( DiffCallback() ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_books, parent, false)
 
         return MainViewHolder(ItemBooksBinding.bind(itemView))
@@ -28,7 +25,6 @@ class MainAdapter() : ListAdapter<BookInfo, MainViewHolder>(
     private class DiffCallback : DiffUtil.ItemCallback<BookInfo>() {
 
         override fun areItemsTheSame(oldItem: BookInfo, newItem: BookInfo): Boolean {
-
             return oldItem == newItem
         }
 

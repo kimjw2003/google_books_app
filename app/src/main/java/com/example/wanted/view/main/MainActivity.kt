@@ -39,10 +39,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initLiveData() {
-
         viewModel.bookList.observe(this) {
-            binding.apply {
-
+            with(binding) {
                 adapter.submitList(it.items?.toList())
                 searchedItemNum.text = "검색된 도서 수 : ${it.totalItems}"
             }
@@ -50,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
-        binding.apply {
+        with(binding) {
             searchBtn.setOnClickListener {
                 viewModel.getSearchedBookList(searchEt.text.toString(), 0)
             }
@@ -62,18 +60,18 @@ class MainActivity : AppCompatActivity() {
         binding.bookRecyclerview.adapter = adapter
     }
 
-    private fun setRecyclerViewScrollListener(){
+    private fun setRecyclerViewScrollListener() {
         binding.apply {
-            bookRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            bookRecyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
                     val lastVisibleItemPosition =
                         (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
-                    val itemTotalCount = recyclerView.adapter!!.itemCount-1
+                    val itemTotalCount = recyclerView.adapter!!.itemCount - 1
 
-                    if(!recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount){
-                        index+=40
+                    if (!recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
+                        index += 40
                         viewModel.getSearchedBookList(searchEt.text.toString(), index)
                         Log.d("test:", index.toString())
                     }

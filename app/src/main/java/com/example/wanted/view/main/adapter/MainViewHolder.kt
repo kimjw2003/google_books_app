@@ -1,22 +1,18 @@
 package com.example.wanted.view.main.adapter
 
-import android.content.Context
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wanted.R
 import com.example.wanted.data.domain.BookInfo
-import com.example.wanted.data.domain.Books
 import com.example.wanted.databinding.ItemBooksBinding
-import com.example.wanted.view.main.MainViewModel
 
-class MainViewHolder (private val binding: ItemBooksBinding
+class MainViewHolder(
+    private val binding: ItemBooksBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindItems(
         bookInfo: BookInfo
     ) {
-
         binding.itemBookTitle.text = bookInfo.volumeInfo?.title
 
         Glide.with(itemView)
