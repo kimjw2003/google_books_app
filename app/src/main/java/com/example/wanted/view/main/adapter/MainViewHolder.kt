@@ -14,11 +14,9 @@ class MainViewHolder (private val binding: ItemBooksBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindItems(
-        viewModel: MainViewModel,
         bookInfo: BookInfo
     ) {
 
-        binding.vm = viewModel
         binding.itemBookTitle.text = bookInfo.volumeInfo?.title
 
         Glide.with(itemView)

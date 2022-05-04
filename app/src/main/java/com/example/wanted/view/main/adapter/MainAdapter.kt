@@ -10,8 +10,7 @@ import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.databinding.ItemBooksBinding
 import com.example.wanted.view.main.MainViewModel
 
-class MainAdapter(private val viewModel: MainViewModel
-) : ListAdapter<BookInfo, MainViewHolder>(
+class MainAdapter() : ListAdapter<BookInfo, MainViewHolder>(
     DiffCallback()
 ) {
 
@@ -23,7 +22,7 @@ class MainAdapter(private val viewModel: MainViewModel
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bindItems(viewModel, getItem(position))
+        holder.bindItems(getItem(position))
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<BookInfo>() {

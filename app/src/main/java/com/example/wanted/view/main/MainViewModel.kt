@@ -1,6 +1,5 @@
 package com.example.wanted.view.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,35 +16,37 @@ class MainViewModel @Inject constructor(
     private val bookRepository: BookRepository
 ): ViewModel() {
 
-    private val _allBooks = MutableLiveData<Books>()
-    val allBooks: LiveData<Books>
-        get() = _allBooks
-
-    private val _searchBookList = MutableLiveData<Books>()
-    val searchBookList: LiveData<Books>
-        get() = _searchBookList
+    private val _bookList = MutableLiveData<Books>()
+    val bookList: LiveData<Books>
+        get() = _bookList
 
     private val _bookInfo = MutableLiveData<List<BookInfo>>()
     val bookInfo: LiveData<List<BookInfo>>
         get() = _bookInfo
 
+    var lastSearchedKeyWord: String = ""
 
-    fun getAllBooks() {
-        viewModelScope.launch {
-            val booksResponse = bookRepository.getBooks()
-
-            booksResponse?.body?.let {
-                _allBooks.postValue(it)
-            }
-        }
+    init {
+        getSearchedBookList("a", 0)
     }
 
-    fun getSearchedBookList(bookTitle: String) {
+    fun getSearchedBookList(bookTitle: String? = null, startIndex: Int) {
         viewModelScope.launch {
-            val bookInfoResponse = bookRepository.getBookInfo(bookTitle)
 
-            bookInfoResponse?.body?.let {
-                _searchBookList.postValue(it)
+            val bookKeyWord = if (bookTitle.isNullOrBlank()) "a" else bookTitle
+
+            val bookInfoResponse = bookRepository.getBookInfo(bookKeyWord, startIndex)
+
+            bookInfoResponse?.body?.let { books ->
+                val list: MutableList<BookInfo> = _bookList.value?.items?.toMutableList() ?: mutableListOf()
+                if(lastSearchedKeyWord == bookKeyWord) {
+                    books.items?.let(list::addAll)
+                    _bookList.postValue(books.copy(items = list))
+                } else {
+                    _bookList.postValue(books)
+                }
+
+                lastSearchedKeyWord = bookKeyWord
             }
         }
     }

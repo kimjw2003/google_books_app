@@ -11,17 +11,9 @@ class BookRepository @Inject constructor(
     private val bookApi: BookApi
 ) {
 
-    suspend fun getBooks(): ResponseBody<Books>? {
+    suspend fun getBookInfo(title: String, startIndex: Int): ResponseBody<Books>? {
         return try {
-            ApiResponse.create(bookApi.getAllBooks())
-        } catch (e: Exception) {
-            ApiResponse.create(e)
-        }
-    }
-
-    suspend fun getBookInfo(title: String): ResponseBody<Books>? {
-        return try {
-            ApiResponse.create(bookApi.getBookInfo(title))
+            ApiResponse.create(bookApi.getBookInfo(title, startIndex, 40))
         } catch (e: Exception) {
             ApiResponse.create(e)
         }
