@@ -31,17 +31,14 @@ class MainActivity : AppCompatActivity() {
 
         initLiveData()
         initListener()
-
-
     }
 
     @SuppressLint("LogNotTimber")
     private fun initLiveData() {
         viewModel.allBooks.observe(this) {
             binding.apply {
-
+                bookList.clear()
                 bookList.addAll(it.items!!)
-                Log.d("test:", it.items.toString())
 
                 setBookRecyclerView()
                 searchedItemNum.text = "검색된 도서 수 : ${it.totalItems}"
@@ -49,8 +46,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.searchBookList.observe(this) {
-            it.items?.forEach {
-                bookList.add(it)
+            binding.apply {
+                bookList.clear()
+                bookList.addAll(it.items!!)
+
+                setBookRecyclerView()
+                searchedItemNum.text = "검색된 도서 수 : ${it.totalItems}"
             }
         }
 
@@ -60,10 +61,10 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             searchBtn.setOnClickListener {
                 viewModel.getSearchedBookList(searchEt.text.toString())
-                setBookRecyclerView()
             }
         }
     }
+
 
     private fun setBookRecyclerView() {
         binding.apply {
