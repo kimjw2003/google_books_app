@@ -20,8 +20,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
-    private var index = 0
-
     private lateinit var adapter: MainAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     private fun initListener() {
         with(binding) {
             searchBtn.setOnClickListener {
-                viewModel.getSearchedBookList(searchEt.text.toString(), 0)
+                viewModel.getSearchedBookList(searchEt.text.toString())
             }
         }
     }
@@ -66,14 +64,8 @@ class MainActivity : AppCompatActivity() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    val lastVisibleItemPosition =
-                        (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
-                    val itemTotalCount = recyclerView.adapter!!.itemCount - 1
-
-                    if (!recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
-                        index += 40
-                        viewModel.getSearchedBookList(searchEt.text.toString(), index)
-                        Log.d("test:", index.toString())
+                    if (recyclerView.canScrollVertically(-1)) {
+                        viewModel.getSearchedBookList(searchEt.text.toString())
                     }
                 }
             })

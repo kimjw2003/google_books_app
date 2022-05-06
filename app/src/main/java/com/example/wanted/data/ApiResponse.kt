@@ -36,8 +36,6 @@ sealed class ApiResponse<T> {
 
 data class ResponseBody<T>(val result: ResponseType, val code: Int, val message: String?, val body: T?, val error: Error? = null) : ApiResponse<T>()
 
-data class Error(val status: Int, val code: ErrorCodeType, val message: String, val timestamp: String)
+data class Error(val code: Int, val message: String, val errors: List<Errors>)
 
-enum class ErrorCodeType {
-
-}
+data class Errors(val message: String, val domain: String, val reason: String)

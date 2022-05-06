@@ -27,25 +27,29 @@ class MainViewModel @Inject constructor(
     val bookInfo: LiveData<List<BookInfo>>
         get() = _bookInfo
 
-    var lastSearchedKeyWord: String = ""
+    private var lastSearchedKeyWord: String = ""
+    private val basicKeyWord = "a"
+
+    private var index = 0
 
     init {
-        getSearchedBookList("a", 0)
+        getSearchedBookList(basicKeyWord)
     }
 
     @SuppressLint("LogNotTimber")
-    fun getSearchedBookList(bookTitle: String? = null, startIndex: Int) {
+    fun getSearchedBookList(bookTitle: String? = null) {
         viewModelScope.launch {
 
-            val bookKeyWord = if (bookTitle.isNullOrBlank()) "a" else bookTitle // a 변수로 선언
+            val bookKeyWord = if (bookTitle.isNullOrBlank()) basicKeyWord else bookTitle
 
-            val bookInfoResponse = bookRepository.getBookInfo(bookKeyWord, startIndex)
+            val bookInfoResponse = bookRepository.getBookInfo(bookKeyWord, index)
 
-            if(bookInfoResponse?.result == ResponseType.SUCCESS) {
+            if (bookInfoResponse?.result == ResponseType.SUCCESS) {
 
                 bookInfoResponse.body?.let { books ->
                     val list: MutableList<BookInfo> =
                         _bookList.value?.items?.toMutableList() ?: mutableListOf()
+
                     if (lastSearchedKeyWord == bookKeyWord) {
                         books.items?.let(list::addAll)
                         _bookList.postValue(books.copy(items = list))
@@ -53,9 +57,10 @@ class MainViewModel @Inject constructor(
                         _bookList.postValue(books)
                     }
 
+                    index += 40
                     lastSearchedKeyWord = bookKeyWord
                 }
-            } else Log.d("test:", "Not Connected : ${bookInfoResponse?.error?.message}") //throw 던지는것도 ㄱㅊ
+            } else Log.d("test:", "Not Connected : ${bookInfoResponse?.error?.message}")
         }
     }
 
