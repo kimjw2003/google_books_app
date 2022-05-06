@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +42,16 @@ class MainActivity : AppCompatActivity() {
             with(binding) {
                 adapter.submitList(it.items?.toList())
                 searchedItemNum.text = "검색된 도서 수 : ${it.totalItems}"
+            }
+        }
+
+        viewModel.showProgress.observe(this) {
+            with(binding) {
+                if (it) {
+                    loadingProgress.visibility = View.VISIBLE
+                } else {
+                    loadingProgress.visibility = View.GONE
+                }
             }
         }
     }

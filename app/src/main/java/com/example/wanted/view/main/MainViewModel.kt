@@ -27,6 +27,10 @@ class MainViewModel @Inject constructor(
     val bookInfo: LiveData<List<BookInfo>>
         get() = _bookInfo
 
+    private val _showProgress = MutableLiveData<Boolean>()
+    val showProgress: LiveData<Boolean>
+        get() = _showProgress
+
     private var lastSearchedKeyWord: String = ""
     private val basicKeyWord = "a"
 
@@ -39,6 +43,8 @@ class MainViewModel @Inject constructor(
     @SuppressLint("LogNotTimber")
     fun getSearchedBookList(bookTitle: String? = null) {
         viewModelScope.launch {
+
+            _showProgress.postValue(true)
 
             val bookKeyWord = if (bookTitle.isNullOrBlank()) basicKeyWord else bookTitle
 
@@ -59,6 +65,8 @@ class MainViewModel @Inject constructor(
 
                     index += 40
                     lastSearchedKeyWord = bookKeyWord
+
+                    _showProgress.postValue(false)
                 }
             } else Log.d("test:", "Not Connected : ${bookInfoResponse?.error?.message}")
         }
