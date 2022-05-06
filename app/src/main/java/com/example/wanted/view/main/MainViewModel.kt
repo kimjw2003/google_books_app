@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val bookRepository: BookRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _bookList = MutableLiveData<Books>()
     val bookList: LiveData<Books>
@@ -44,9 +44,9 @@ class MainViewModel @Inject constructor(
     fun getSearchedBookList(bookTitle: String? = null) {
         viewModelScope.launch {
 
-            _showProgress.postValue(true)
-
             val bookKeyWord = if (bookTitle.isNullOrBlank()) basicKeyWord else bookTitle
+
+            if(lastSearchedKeyWord != bookKeyWord) _showProgress.postValue(true)
 
             val bookInfoResponse = bookRepository.getBookInfo(bookKeyWord, index)
 
@@ -63,11 +63,11 @@ class MainViewModel @Inject constructor(
                         _bookList.postValue(books)
                     }
 
-                    index += 40
                     lastSearchedKeyWord = bookKeyWord
-
-                    _showProgress.postValue(false)
                 }
+                index += 40
+                _showProgress.postValue(false)
+
             } else Log.d("test:", "Not Connected : ${bookInfoResponse?.error?.message}")
         }
     }

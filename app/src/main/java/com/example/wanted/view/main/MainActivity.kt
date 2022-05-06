@@ -75,7 +75,11 @@ class MainActivity : AppCompatActivity() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    if (recyclerView.canScrollVertically(-1)) {
+                    val lastVisibleItemPosition =
+                        (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                    val itemTotalCount = recyclerView.adapter!!.itemCount - 1
+
+                    if (!recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
                         viewModel.getSearchedBookList(searchEt.text.toString())
                     }
                 }
