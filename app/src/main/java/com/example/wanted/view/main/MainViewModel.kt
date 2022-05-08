@@ -23,10 +23,6 @@ class MainViewModel @Inject constructor(
     val bookList: LiveData<Books>
         get() = _bookList
 
-    private val _bookInfo = MutableLiveData<List<BookInfo>>()
-    val bookInfo: LiveData<List<BookInfo>>
-        get() = _bookInfo
-
     private val _showProgress = MutableLiveData<Boolean>()
     val showProgress: LiveData<Boolean>
         get() = _showProgress
@@ -71,16 +67,5 @@ class MainViewModel @Inject constructor(
             } else Log.d("test:", "Not Connected : ${bookInfoResponse?.error?.message}")
         }
     }
-
-
-//    fun getBookInfo(bookTitle: String) {
-//        viewModelScope.launch {
-//            val bookInfoResponse = bookRepository.getBookInfo(bookTitle)
-//
-//            bookInfoResponse?.body?.let {
-//                _bookInfo.postValue(it)
-//            }
-//        }
-//    }
 
 }

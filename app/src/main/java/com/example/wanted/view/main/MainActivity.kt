@@ -3,7 +3,6 @@ package com.example.wanted.view.main
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
@@ -26,9 +25,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.setVariable(0, viewModel)
-        binding.vm = viewModel
-        binding.lifecycleOwner = this
+        with(binding) {
+            setVariable(0, viewModel)
+            vm = viewModel
+            lifecycleOwner = this@MainActivity
+        }
 
         initLiveData()
         initListener()
