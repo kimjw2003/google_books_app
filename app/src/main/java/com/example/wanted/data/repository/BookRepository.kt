@@ -2,7 +2,6 @@ package com.example.wanted.data.repository
 
 import com.example.wanted.data.ApiResponse
 import com.example.wanted.data.ResponseBody
-import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.data.domain.Books
 import com.example.wanted.data.remote.BookApi
 import com.example.wanted.util.Constants

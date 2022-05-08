@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wanted.R
 import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.data.domain.Books
 import com.example.wanted.data.repository.BookRepository
