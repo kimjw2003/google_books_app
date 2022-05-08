@@ -15,7 +15,7 @@
     tools:context=".view.main.MainActivity">
 
     <EditText
-        android:id="@+id/search_Et"
+        android:id="@+id/search_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -23,12 +23,12 @@
         android:layout_marginEnd="20dp"
         android:hint="@string/search_text"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/search_Btn"
+        app:layout_constraintEnd_toStartOf="@+id/search_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/search_Btn"
+        android:id="@+id/search_btn"
         android:layout_width="80dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_Et" />
+        app:layout_constraintTop_toBottomOf="@+id/search_et" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/book_recyclerview"
@@ -55,7 +55,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_Et" />
+        app:layout_constraintTop_toBottomOf="@+id/search_et" />
 
     <ProgressBar
         android:id="@+id/loading_progress"

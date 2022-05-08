@@ -24,11 +24,6 @@ object NetworkModule {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .retryOnConnectionFailure(true)
-//            .addNetworkInterceptor {
-//                val request = it.request().newBuilder()
-//                    .build()
-//                it.proceed(request)
-//            }
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)

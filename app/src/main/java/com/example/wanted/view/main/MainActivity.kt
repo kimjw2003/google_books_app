@@ -3,14 +3,14 @@ package com.example.wanted.view.main
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wanted.R
 import com.example.wanted.databinding.ActivityMainBinding
-import com.example.wanted.view.main.adapter.MainAdapter
+import com.example.wanted.view.main.adapter.BookAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var adapter: MainAdapter
+    private val bookAdapter = BookAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,35 +39,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initLiveData() {
-        viewModel.bookList.observe(this) {
-            with(binding) {
-                adapter.submitList(it.items?.toList())
-                searchedItemNum.text = resources.getString(R.string.searched_books_text, it.totalItems)
-            }
-        }
-
-        viewModel.showProgress.observe(this) {
-            with(binding) {
-                if (it) {
-                    loadingProgress.visibility = View.VISIBLE
-                } else {
-                    loadingProgress.visibility = View.GONE
+        with(viewModel) {
+            bookList.observe(this@MainActivity) {
+                with(binding) {
+                    bookAdapter.submitList(it.items?.toList())
+                    searchedItemNum.text =
+                        resources.getString(R.string.searched_books_text, it.totalItems)
                 }
+            }
+
+            showProgress.observe(this@MainActivity) {
+                binding.loadingProgress.isVisible = it
             }
         }
     }
 
     private fun initListener() {
-        with(binding) {
-            searchBtn.setOnClickListener {
-                viewModel.getSearchedBookList(searchEt.text.toString())
-            }
+        binding.searchBtn.setOnClickListener {
+            viewModel.getSearchedBookList(binding.searchEt.text.toString())
         }
     }
 
     private fun setBookRecyclerView() {
-        adapter = MainAdapter()
-        binding.bookRecyclerview.adapter = adapter
+        binding.bookRecyclerview.adapter = bookAdapter
     }
 
     private fun setRecyclerViewScrollListener() {

@@ -29,7 +29,7 @@ class MainViewModel @Inject constructor(
         get() = _showProgress
 
     private var lastSearchedKeyWord: String = ""
-    private val basicKeyWord = R.string.start_searching_text.toString()
+    private val basicKeyWord = "a"
 
     private var index = 0
 
@@ -38,16 +38,15 @@ class MainViewModel @Inject constructor(
     }
 
     @SuppressLint("LogNotTimber")
-    fun getSearchedBookList(bookTitle: String? = null) {
-        viewModelScope.launch {
+    fun getSearchedBookList(bookTitle: String? = null) = viewModelScope.launch {
 
             val bookKeyWord = if (bookTitle.isNullOrBlank()) basicKeyWord else bookTitle
 
-            if(lastSearchedKeyWord != bookKeyWord) _showProgress.postValue(true)
+            _showProgress.postValue(true)
 
             val bookInfoResponse = bookRepository.getBookInfo(bookKeyWord, index)
 
-            if (bookInfoResponse?.result == ResponseType.SUCCESS) {
+            if (bookInfoResponse.result == ResponseType.SUCCESS) {
 
                 bookInfoResponse.body?.let { books ->
                     val list: MutableList<BookInfo> =
@@ -65,8 +64,7 @@ class MainViewModel @Inject constructor(
                 index += 40
                 _showProgress.postValue(false)
 
-            } else Log.d("test:", "Not Connected : ${bookInfoResponse?.error?.message}")
+            } else Log.d("test:", "Not Connected : ${bookInfoResponse.error?.message}")
         }
-    }
 
 }

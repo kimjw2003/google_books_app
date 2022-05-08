@@ -1,7 +1,6 @@
 package com.example.wanted.util
 
-class Constants {
-    companion object {
-        const val BASE_URL = "https://www.googleapis.com/books/v1/"
-    }
+object Constants {
+    const val BASE_URL = "https://www.googleapis.com/books/v1/"
+    const val MAX_RESULT = 40
 }

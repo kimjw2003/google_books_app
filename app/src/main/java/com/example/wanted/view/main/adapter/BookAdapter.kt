@@ -4,21 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.wanted.R
 import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.databinding.ItemBooksBinding
-import com.example.wanted.view.main.MainViewModel
 
-class MainAdapter: ListAdapter<BookInfo, MainViewHolder>( DiffCallback() ) {
+class BookAdapter: ListAdapter<BookInfo, BookViewHolder>( DiffCallback() ) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_books, parent, false)
 
-        return MainViewHolder(ItemBooksBinding.bind(itemView))
+        return BookViewHolder(ItemBooksBinding.bind(itemView))
     }
 
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         holder.bindItems(getItem(position))
     }
 

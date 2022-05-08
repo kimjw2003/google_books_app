@@ -6,7 +6,7 @@ import com.example.wanted.R
 import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.databinding.ItemBooksBinding
 
-class MainViewHolder(
+class BookViewHolder(
     private val binding: ItemBooksBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
