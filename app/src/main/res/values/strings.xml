@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Wanted</string>
+
+    <!-- MainActivity -->
+    <string name="search_text">검색</string>
+    <string name="searched_books_text">검색된 도서 수 : %d</string>
+
+    <!-- MainViewModel -->
+    <string name="start_searching_text">a</string>
 </resources>

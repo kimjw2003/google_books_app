@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wanted.R
 import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.data.domain.Books
 import com.example.wanted.data.repository.BookRepository
@@ -28,7 +29,7 @@ class MainViewModel @Inject constructor(
         get() = _showProgress
 
     private var lastSearchedKeyWord: String = ""
-    private val basicKeyWord = "a"
+    private val basicKeyWord = R.string.start_searching_text.toString()
 
     private var index = 0
 

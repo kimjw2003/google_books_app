@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.bookList.observe(this) {
             with(binding) {
                 adapter.submitList(it.items?.toList())
-                searchedItemNum.text = "검색된 도서 수 : ${it.totalItems}"
+                searchedItemNum.text = resources.getString(R.string.searched_books_text, it.totalItems)
             }
         }
 
