@@ -4,5 +4,7 @@
     <!-- MainActivity -->
     <string name="search_text">검색</string>
     <string name="searched_books_text">검색된 도서 수 : %d</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
