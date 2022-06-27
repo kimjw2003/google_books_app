@@ -7,13 +7,16 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.wanted.R
 import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.databinding.ItemBooksBinding
+import com.example.wanted.view.main.MainViewModel
 
-class BookAdapter: ListAdapter<BookInfo, BookViewHolder>( DiffCallback() ) {
+class BookAdapter(
+    private val viewModel: MainViewModel
+): ListAdapter<BookInfo, BookViewHolder>( DiffCallback() ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_books, parent, false)
 
-        return BookViewHolder(ItemBooksBinding.bind(itemView))
+        return BookViewHolder(ItemBooksBinding.bind(itemView), viewModel)
     }
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {

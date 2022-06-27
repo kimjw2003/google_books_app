@@ -3,7 +3,18 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+        <variable
+            name="vm"
+            type="com.example.wanted.view.main.MainViewModel" />
+
+        <variable
+            name="bookInfo"
+            type="com.example.wanted.data.domain.BookInfo" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/item_book"
     android:layout_width="match_parent"
     android:layout_height="70dp">
 
@@ -14,7 +25,8 @@
         android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:item_book_image="@{bookInfo.volumeInfo.imageLinks.thumbnail}"/>
 
     <TextView
         android:id="@+id/item_book_title"
@@ -23,6 +35,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
         android:maxLines="1"
+        android:text="@{bookInfo.volumeInfo.title}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_book_image"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +49,8 @@
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_book_image"
-        app:layout_constraintTop_toBottomOf="@+id/item_book_title" />
+        app:layout_constraintTop_toBottomOf="@+id/item_book_title"
+        app:item_book_publisher="@{bookInfo.volumeInfo.publisher}"/>
 
     <View
         android:layout_width="match_parent"

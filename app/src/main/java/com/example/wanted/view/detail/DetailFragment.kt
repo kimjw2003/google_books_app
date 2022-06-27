@@ -30,5 +30,15 @@ class DetailFragment : Fragment() {
             vm = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
+        initLiveData()
+        initListener()
+    }
+
+    private fun initLiveData() {
+
+    }
+
+    private fun initListener() {
+
     }
 }

@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
-    private val bookAdapter = BookAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +41,10 @@ class MainActivity : AppCompatActivity() {
         with(viewModel) {
             bookList.observe(this@MainActivity) {
                 with(binding) {
-                    bookAdapter.submitList(it.items?.toList())
+                    bookRecyclerview.apply {
+                        adapter = BookAdapter(viewModel)
+                        (adapter as BookAdapter).submitList(it.items?.toList())
+                    }
                     searchedItemNum.text =
                         resources.getString(R.string.searched_books_text, it.totalItems)
                 }
@@ -61,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBookRecyclerView() {
-        binding.bookRecyclerview.adapter = bookAdapter
+        binding.bookRecyclerview.adapter = BookAdapter(viewModel)
     }
 
     private fun setRecyclerViewScrollListener() {
