@@ -23,6 +23,10 @@ class MainViewModel @Inject constructor(
     val bookList: LiveData<Books>
         get() = _bookList
 
+    private val _bookInfo = MutableLiveData<BookInfo>()
+    val bookInfo: LiveData<BookInfo>
+        get() = _bookInfo
+
     private val _showProgress = MutableLiveData<Boolean>()
     val showProgress: LiveData<Boolean>
         get() = _showProgress
@@ -43,11 +47,11 @@ class MainViewModel @Inject constructor(
 
             _showProgress.postValue(true)
 
-            val bookInfoResponse = bookRepository.getBookInfo(bookKeyWord, index)
+            val booksResponse = bookRepository.getBooks(bookKeyWord, index)
 
-            if (bookInfoResponse.result == ResponseType.SUCCESS) {
+            if (booksResponse.result == ResponseType.SUCCESS) {
 
-                bookInfoResponse.body?.let { books ->
+                booksResponse.body?.let { books ->
                     val list: MutableList<BookInfo> =
                         _bookList.value?.items?.toMutableList() ?: mutableListOf()
 
@@ -63,7 +67,26 @@ class MainViewModel @Inject constructor(
                 index += 40
                 _showProgress.postValue(false)
 
-            } else Log.d("test:", "Not Connected : ${bookInfoResponse.error?.message}")
+            } else Log.d("test:", "Not Connected : ${booksResponse.error?.message}")
         }
+
+
+    @SuppressLint("LogNotTimber")
+    fun showBookDetail(bookInfo: BookInfo) = viewModelScope.launch {
+
+        _showProgress.postValue(true)
+
+        val bookTitle = bookInfo.volumeInfo?.title ?: ""
+        val bookInfoResponse = bookRepository.getBooks(bookTitle, 0)
+
+        if (bookInfoResponse.result == ResponseType.SUCCESS) {
+            bookInfoResponse.body?.let { books ->
+                books.items?.let {
+                    _bookInfo.postValue(it[0])
+                }
+            }
+            _showProgress.postValue(true)
+        } else Log.d("test:", "Not Connected : ${bookInfoResponse.error?.message}")
+    }
 
 }

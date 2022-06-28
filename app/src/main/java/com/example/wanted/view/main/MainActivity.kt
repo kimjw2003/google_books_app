@@ -3,6 +3,8 @@ package com.example.wanted.view.main
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wanted.R
 import com.example.wanted.databinding.ActivityMainBinding
+import com.example.wanted.view.detail.DetailFragment
 import com.example.wanted.view.main.adapter.BookAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,6 +51,20 @@ class MainActivity : AppCompatActivity() {
                     searchedItemNum.text =
                         resources.getString(R.string.searched_books_text, it.totalItems)
                 }
+            }
+
+            bookInfo.observe(this@MainActivity) {
+
+                val bundle = Bundle().apply {
+                    putParcelable("bookInfo" ,it)
+                }
+
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(android.R.id.content, DetailFragment().apply { arguments = bundle })
+                    .addToBackStack(null)
+                    .commit()
+
             }
 
             showProgress.observe(this@MainActivity) {
