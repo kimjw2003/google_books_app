@@ -85,7 +85,7 @@ class MainViewModel @Inject constructor(
                     _bookInfo.postValue(it[0])
                 }
             }
-            _showProgress.postValue(true)
+            _showProgress.postValue(false)
         } else Log.d("test:", "Not Connected : ${bookInfoResponse.error?.message}")
     }
 
