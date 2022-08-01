@@ -12,5 +12,6 @@
     <string name="detail_empty">알수없음</string>
     <string name="detail_pages_title">총 페이지</string>
     <string name="detail_pages_content">%d쪽</string>
+    <string name="detail_publish_date_title">출판일</string>
 
 </resources>

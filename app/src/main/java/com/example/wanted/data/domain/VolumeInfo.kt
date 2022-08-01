@@ -8,7 +8,7 @@ data class VolumeInfo(
     var title: String? = null,
     var subTitle: String? = null,
     var publisher: String? = null,
-    var publishDate: String? = null,
+    var publishedDate: String? = null,
     var description: String? = null,
     var printType: String? = null,
     var pageCount: Int? = null,
