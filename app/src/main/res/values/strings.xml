@@ -13,5 +13,6 @@
     <string name="detail_pages_title">총 페이지</string>
     <string name="detail_pages_content">%d쪽</string>
     <string name="detail_publish_date_title">출판일</string>
+    <string name="detail_description_title">줄거리</string>
 
 </resources>

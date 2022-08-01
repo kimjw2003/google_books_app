@@ -60,6 +60,7 @@ class DetailFragment : Fragment() {
             detailWriterContent.text = bookInfo?.publisher ?: resources.getString(R.string.detail_empty)
             detailPagesContent.text = if(bookInfo?.pageCount == null) resources.getString(R.string.detail_empty) else resources.getString(R.string.detail_pages_content, bookInfo?.pageCount)
             detailPublishDateContent.text = bookInfo?.publishedDate ?: resources.getString(R.string.detail_empty)
+            detailDescriptionContent.text = bookInfo?.description ?: resources.getString(R.string.detail_empty)
         }
     }
 }
