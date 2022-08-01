@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.wanted.R
 import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.databinding.FragmentDetailBinding
+import com.example.wanted.view.web.WebFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -61,6 +62,19 @@ class DetailFragment : Fragment() {
             detailPagesContent.text = if(bookInfo?.pageCount == null) resources.getString(R.string.detail_empty) else resources.getString(R.string.detail_pages_content, bookInfo?.pageCount)
             detailPublishDateContent.text = bookInfo?.publishedDate ?: resources.getString(R.string.detail_empty)
             detailDescriptionContent.text = bookInfo?.description ?: resources.getString(R.string.detail_empty)
+
+            detailPreview.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putString("urlInfo", bookInfo?.previewLink)
+                }
+
+                requireActivity()
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .add(android.R.id.content, WebFragment().apply { arguments = bundle })
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 }
