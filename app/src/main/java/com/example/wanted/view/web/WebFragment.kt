@@ -36,7 +36,7 @@ class WebFragment : Fragment() {
                 webViewClient = WebViewClient()
                 settings.javaScriptEnabled = true
 
-                urlInfo = arguments?.getString("urlInfo") as String
+                urlInfo = arguments?.getString("webUrlInfo") as String
 
                 loadUrl(urlInfo)
             }

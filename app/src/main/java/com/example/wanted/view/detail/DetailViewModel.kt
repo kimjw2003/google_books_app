@@ -1,5 +1,6 @@
 package com.example.wanted.view.detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,6 +23,10 @@ class DetailViewModel @Inject constructor(
     val previewLink: LiveData<String?>
         get() = _previewLink
 
+    private val _imageUrl = MutableLiveData<String?>()
+    val imageUrl: LiveData<String?>
+        get() = _imageUrl
+
 
     fun showPreviewPage(previewLink: String?) = viewModelScope.launch {
         _previewLink.postValue(previewLink)
@@ -29,6 +34,10 @@ class DetailViewModel @Inject constructor(
 
     fun showBookInfo(bookInfo: VolumeInfo?) = viewModelScope.launch {
         _volumeInfo.postValue(bookInfo)
+    }
+
+    fun showImage(imageUrl: String?) = viewModelScope.launch {
+        _imageUrl.postValue(imageUrl)
     }
 
 }

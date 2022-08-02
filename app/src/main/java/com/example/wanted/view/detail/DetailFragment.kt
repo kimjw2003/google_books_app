@@ -52,7 +52,7 @@ class DetailFragment : Fragment() {
 
             previewLink.observe(viewLifecycleOwner) {
                 val bundle = Bundle().apply {
-                    putString("urlInfo", it)
+                    putString("webUrlInfo", it)
                 }
 
                 requireActivity()
@@ -63,11 +63,25 @@ class DetailFragment : Fragment() {
                     .commit()
             }
 
+            imageUrl.observe(viewLifecycleOwner) {
+                val bundle = Bundle().apply {
+                    putString("imageUrlInfo", it)
+                }
+
+                requireActivity()
+                    .supportFragmentManager
+                    .beginTransaction()
+                    .add(android.R.id.content, DetailImageFragment().apply { arguments = bundle })
+                    .addToBackStack(null)
+                    .commit()
+            }
+
             volumeInfo.observe(viewLifecycleOwner) {
                 with(binding) {
 
                     Glide.with(requireContext())
                         .load(it?.imageLinks?.thumbnail)
+                        .error(R.drawable.default_img)
                         .into(detailImage)
 
                     detailTitle.text = it?.title
@@ -87,13 +101,16 @@ class DetailFragment : Fragment() {
     private fun initListener() {
 
         with(binding) {
-
             val bookInfo = book?.volumeInfo
 
             viewModel.showBookInfo(bookInfo)
 
             detailPreview.setOnClickListener {
                 viewModel.showPreviewPage(bookInfo?.previewLink)
+            }
+
+            detailImage.setOnClickListener {
+                if(bookInfo?.imageLinks?.thumbnail != null) viewModel.showImage(bookInfo.imageLinks?.thumbnail)
             }
         }
     }
