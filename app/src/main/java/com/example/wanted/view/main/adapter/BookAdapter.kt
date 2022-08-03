@@ -7,29 +7,27 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.wanted.R
 import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.databinding.ItemBooksBinding
-import com.example.wanted.view.main.MainViewModel
+import com.example.wanted.view.main.items.BookListItem
 
-class BookAdapter(
-    private val viewModel: MainViewModel
-): ListAdapter<BookInfo, BookViewHolder>( DiffCallback() ) {
+class BookAdapter : ListAdapter<BookListItem, BookViewHolder>( DiffCallback() ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_books, parent, false)
 
-        return BookViewHolder(ItemBooksBinding.bind(itemView), viewModel)
+        return BookViewHolder(ItemBooksBinding.bind(itemView))
     }
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        holder.bindItems(getItem(position))
+        holder.bindItems(getItem(position) as BookListItem.BookItem)
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<BookInfo>() {
+    private class DiffCallback : DiffUtil.ItemCallback<BookListItem>() {
 
-        override fun areItemsTheSame(oldItem: BookInfo, newItem: BookInfo): Boolean {
+        override fun areItemsTheSame(oldItem: BookListItem, newItem: BookListItem): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: BookInfo, newItem: BookInfo): Boolean {
+        override fun areContentsTheSame(oldItem: BookListItem, newItem: BookListItem): Boolean {
             return oldItem == newItem
         }
     }

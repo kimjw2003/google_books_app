@@ -45,15 +45,14 @@ class MainActivity : AppCompatActivity() {
             bookList.observe(this@MainActivity) {
                 with(binding) {
                     bookRecyclerview.apply {
-                        adapter = BookAdapter(viewModel)
-                        (adapter as BookAdapter).submitList(it.items?.toList())
+                        (adapter as BookAdapter).submitList(it)
                     }
                     searchedItemNum.text =
-                        resources.getString(R.string.searched_books_text, it.totalItems)
+                        resources.getString(R.string.searched_books_text, it.size)
                 }
             }
 
-            bookInfo.observe(this@MainActivity) {
+            bookItemOnClick.observe(this@MainActivity) {
 
                 val bundle = Bundle().apply {
                     putParcelable("bookInfo" ,it)
@@ -64,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                     .add(android.R.id.content, DetailFragment().apply { arguments = bundle })
                     .addToBackStack(null)
                     .commit()
-
             }
 
             showProgress.observe(this@MainActivity) {
@@ -80,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBookRecyclerView() {
-        binding.bookRecyclerview.adapter = BookAdapter(viewModel)
+        binding.bookRecyclerview.adapter = BookAdapter()
     }
 
     private fun setRecyclerViewScrollListener() {

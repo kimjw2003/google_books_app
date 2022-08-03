@@ -6,18 +6,17 @@ import com.example.wanted.R
 import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.databinding.ItemBooksBinding
 import com.example.wanted.view.main.MainViewModel
+import com.example.wanted.view.main.items.BookListItem
 
 class BookViewHolder(
-    private val binding: ItemBooksBinding,
-    private val viewModel: MainViewModel
+    private val binding: ItemBooksBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindItems(
-        bookInfo: BookInfo
+        bookItem: BookListItem.BookItem
     ) {
 
-        binding.vm = viewModel
-        binding.bookInfo = bookInfo
+        binding.bookItem = bookItem
         binding.executePendingBindings()
     }
 }

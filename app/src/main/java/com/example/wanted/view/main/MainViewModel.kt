@@ -10,6 +10,7 @@ import com.example.wanted.data.domain.BookInfo
 import com.example.wanted.data.domain.Books
 import com.example.wanted.data.repository.BookRepository
 import com.example.wanted.data.type.ResponseType
+import com.example.wanted.view.main.items.BookListItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,13 +20,17 @@ class MainViewModel @Inject constructor(
     private val bookRepository: BookRepository
 ) : ViewModel() {
 
-    private val _bookList = MutableLiveData<Books>()
-    val bookList: LiveData<Books>
+    private val _bookList = MutableLiveData<List<BookListItem>>()
+    val bookList: LiveData<List<BookListItem>>
         get() = _bookList
 
     private val _bookInfo = MutableLiveData<BookInfo>()
     val bookInfo: LiveData<BookInfo>
         get() = _bookInfo
+
+    private val _bookItemOnClick = MutableLiveData<BookInfo>()
+    val bookItemOnClick: LiveData<BookInfo>
+        get() = _bookItemOnClick
 
     private val _showProgress = MutableLiveData<Boolean>()
     val showProgress: LiveData<Boolean>
@@ -33,6 +38,7 @@ class MainViewModel @Inject constructor(
 
     private var lastSearchedKeyWord: String = ""
     private val basicKeyWord = "a"
+    private lateinit var list: MutableList<BookListItem>
 
     private var index = 0
 
@@ -52,14 +58,25 @@ class MainViewModel @Inject constructor(
             if (booksResponse.result == ResponseType.SUCCESS) {
 
                 booksResponse.body?.let { books ->
-                    val list: MutableList<BookInfo> =
-                        _bookList.value?.items?.toMutableList() ?: mutableListOf()
+
+                    val listItem = mutableListOf<BookListItem>()
+
+                    books.items?.map {
+                        BookListItem.BookItem(
+                            bookInfo = it,
+                            onClick = { _bookItemOnClick.postValue(it) }
+                        )
+                    }?.forEachIndexed { index, bookItem ->
+                        listItem.add(bookItem)
+                    }
+
+                    list = _bookList.value?.toMutableList() ?: mutableListOf()
 
                     if (lastSearchedKeyWord == bookKeyWord) {
-                        books.items?.let(list::addAll)
-                        _bookList.postValue(books.copy(items = list))
+                        listItem.let(list::addAll)
+                        _bookList.postValue(list)
                     } else {
-                        _bookList.postValue(books)
+                        _bookList.postValue(listItem)
                     }
 
                     lastSearchedKeyWord = bookKeyWord
@@ -69,24 +86,5 @@ class MainViewModel @Inject constructor(
 
             } else Log.d("test:", "Not Connected : ${booksResponse.error?.message}")
         }
-
-
-    @SuppressLint("LogNotTimber")
-    fun showBookDetail(bookInfo: BookInfo) = viewModelScope.launch {
-
-        _showProgress.postValue(true)
-
-        val bookTitle = bookInfo.volumeInfo?.title ?: ""
-        val bookInfoResponse = bookRepository.getBooks(bookTitle, 0)
-
-        if (bookInfoResponse.result == ResponseType.SUCCESS) {
-            bookInfoResponse.body?.let { books ->
-                books.items?.let {
-                    _bookInfo.postValue(it[0])
-                }
-            }
-            _showProgress.postValue(false)
-        } else Log.d("test:", "Not Connected : ${bookInfoResponse.error?.message}")
-    }
 
 }
