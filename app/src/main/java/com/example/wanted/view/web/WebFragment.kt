@@ -2,6 +2,7 @@ package com.example.wanted.view.web
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +40,18 @@ class WebFragment : Fragment() {
                 urlInfo = arguments?.getString("webUrlInfo") as String
 
                 loadUrl(urlInfo)
+
+                setOnKeyListener(View.OnKeyListener{ _, keyCode, _ ->
+                    if(keyCode == KeyEvent.KEYCODE_BACK && canGoBack()) {
+                        goBack()
+                        return@OnKeyListener true
+                    }
+
+                    return@OnKeyListener false
+                })
             }
         }
     }
+
+
 }
