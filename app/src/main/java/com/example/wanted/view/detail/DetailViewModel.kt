@@ -27,6 +27,10 @@ class DetailViewModel @Inject constructor(
     val imageUrl: LiveData<String?>
         get() = _imageUrl
 
+    private val _backIconOnClick = MutableLiveData<Unit>()
+    val backIconOnClick: LiveData<Unit>
+        get() = _backIconOnClick
+
 
     fun showPreviewPage(previewLink: String?) = viewModelScope.launch {
         _previewLink.postValue(previewLink)
@@ -40,4 +44,7 @@ class DetailViewModel @Inject constructor(
         _imageUrl.postValue(imageUrl)
     }
 
+    fun backIconClick() = viewModelScope.launch {
+        _backIconOnClick.postValue(Unit)
+    }
 }

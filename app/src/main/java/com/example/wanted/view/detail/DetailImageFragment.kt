@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.wanted.R
 import com.example.wanted.databinding.FragmentDetailBinding
@@ -17,6 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailImageFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailImageBinding
+
+    private val viewModel: DetailViewModel by viewModels()
 
     private lateinit var imageUrl: String
 
@@ -42,7 +45,9 @@ class DetailImageFragment : Fragment() {
     }
 
     private fun initLiveData() {
-
+        viewModel.backIconOnClick.observe(viewLifecycleOwner) {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     private fun initListener() {
@@ -51,5 +56,8 @@ class DetailImageFragment : Fragment() {
             .error(R.drawable.default_img)
             .into(binding.imageView)
 
+        binding.detailImageBackIcon.setOnClickListener {
+            viewModel.backIconClick()
+        }
     }
 }
