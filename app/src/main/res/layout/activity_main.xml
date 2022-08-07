@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.example.wanted.view.main.MainViewModel" />
+            type="com.example.google_books_app.view.main.MainViewModel" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

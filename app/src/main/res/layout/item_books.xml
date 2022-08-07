@@ -7,7 +7,7 @@
 
         <variable
             name="bookItem"
-            type="com.example.wanted.view.main.items.BookListItem.BookItem" />
+            type="com.example.google_books_app.view.main.items.BookListItem.BookItem" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
