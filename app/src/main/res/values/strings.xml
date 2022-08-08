@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wanted</string>
+    <string name="app_name">Google_books_app</string>
 
     <!-- MainActivity -->
     <string name="search_text">검색</string>

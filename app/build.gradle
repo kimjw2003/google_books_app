@@ -11,7 +11,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.wanted"
+        applicationId "com.example.google_books_app"
         minSdk 21
         targetSdk 32
         versionCode 1
